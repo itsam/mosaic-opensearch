@@ -1,0 +1,37 @@
+services:
+  opensearch-node1:
+    # image: opensearchproject/opensearch:latest
+    build: .
+    container_name: opensearch-node1
+    environment:
+      - cluster.name=opensearch-cluster
+      - node.name=opensearch-node1
+      - discovery.seed_hosts=opensearch-node1
+      - cluster.initial_cluster_manager_nodes=opensearch-node1
+      - bootstrap.memory_lock=true
+      - OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m
+      - OPENSEARCH_INITIAL_ADMIN_PASSWORD=${OPENSEARCH_INITIAL_ADMIN_PASSWORD}
+      - network.host=0.0.0.0
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    volumes:
+      - opensearch-data1:/usr/share/opensearch/data
+    ports:
+      # Use the full mapping to ensure a static port.
+      - 9200:9200
+    networks:
+      - opensearch-net
+      - dokploy-network
+
+volumes:
+  opensearch-data1:
+
+networks:
+  opensearch-net:
+  dokploy-network:
+    external: true
