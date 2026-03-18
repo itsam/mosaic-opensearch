@@ -1,0 +1,6 @@
+curl -k -u "admin:mxXaMi4xsQwiZfUEXF7N5EcQlPdrTNlx" \
+  https://opensearch.mosaic.infalia.com:9200/_cluster/health
+
+  ###
+
+  
